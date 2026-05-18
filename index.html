@@ -1944,6 +1944,222 @@
       </div>
     </div>
   </div>
+
+  <!-- EXPLAINER: SAMPLING BIAS -->
+  <div class="explainer-card reveal" style="margin-top: 2px;">
+    <div class="explainer-header">
+      <div class="explainer-meta">
+        <div class="explainer-num">EXPLAINER — 02</div>
+        <h3 class="explainer-title">WHAT IS SAMPLING BIAS?</h3>
+        <p class="explainer-tagline">The reason your AI works great in the lab and fails on the people who need it most.</p>
+      </div>
+      <div class="explainer-definition">
+        <div class="explainer-def-label">One-Sentence Definition</div>
+        <p class="explainer-def-text">Sampling bias occurs when the data used to train an AI system doesn't accurately represent the population it will be deployed on — so the model learns patterns that don't generalise, performing well for over-represented groups and failing for under-represented ones.</p>
+      </div>
+    </div>
+
+    <div class="explainer-body">
+
+      <div class="explainer-block">
+        <div class="explainer-block-label">Why This Matters</div>
+        <p class="explainer-block-text">Most people assume that if you have a large dataset, the model will be fair. This is wrong. Size doesn't equal representativeness. A dataset of 10 million records is still biased if 9.8 million of them come from the same demographic. The model doesn't know what it hasn't seen — it optimises for the distribution it was trained on. When that distribution doesn't match the real world, the people left out pay the price. This is how facial recognition fails on darker skin tones, clinical tools miss diagnoses in women, and NLP models perform worse on dialects outside Standard American English.</p>
+      </div>
+
+      <div class="proxy-table-wrap">
+        <div class="explainer-block-label" style="margin-bottom: 16px;">Common Forms of Sampling Bias</div>
+        <div class="proxy-table">
+          <div class="proxy-row proxy-row-head">
+            <span>Form</span>
+            <span>What It Means</span>
+            <span>Real Example</span>
+          </div>
+          <div class="proxy-row">
+            <span><code class="inline-code">Underrepresentation</code></span>
+            <span class="proxy-attr">A group appears far less in training data than in the real world</span>
+            <span>Facial recognition trained mostly on light-skinned faces</span>
+          </div>
+          <div class="proxy-row">
+            <span><code class="inline-code">Selection Bias</code></span>
+            <span class="proxy-attr">Data collected from a non-random subset of the population</span>
+            <span>Clinical AI trained on records from affluent ZIP codes only</span>
+          </div>
+          <div class="proxy-row">
+            <span><code class="inline-code">Historical Bias</code></span>
+            <span class="proxy-attr">Past data reflects past inequities; the model learns the inequity</span>
+            <span>Hiring models trained on 10 years of male-dominated engineering hires</span>
+          </div>
+          <div class="proxy-row">
+            <span><code class="inline-code">Survivorship Bias</code></span>
+            <span class="proxy-attr">Only "successful" cases make it into the dataset; failures are invisible</span>
+            <span>Loan models trained only on approved applicants, never denied ones</span>
+          </div>
+          <div class="proxy-row">
+            <span><code class="inline-code">Measurement Bias</code></span>
+            <span class="proxy-attr">The same reality is measured differently for different groups</span>
+            <span>Over-policing creates more arrest records for Black communities — not higher crime</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="explainer-proof">
+        <div class="explainer-block-label" style="margin-bottom: 24px;">Real-World Proof: MIT Gender Shades (2018)</div>
+        <p class="explainer-block-text" style="margin-bottom: 24px;">Joy Buolamwini &amp; Timnit Gebru tested three commercial facial recognition systems on a dataset balanced across gender and skin tone. Every system performed dramatically worse on darker-skinned women — not because the algorithms were programmed to fail them, but because training datasets were overwhelmingly composed of lighter-skinned faces. The fix was not a new algorithm. It was a more representative dataset.</p>
+        <div class="proxy-table">
+          <div class="proxy-row proxy-row-head">
+            <span>Group</span>
+            <span>Best System Error Rate</span>
+            <span>Worst System Error Rate</span>
+          </div>
+          <div class="proxy-row">
+            <span style="color: var(--text);">Lighter-skinned males</span>
+            <span style="color: var(--accent3);">~0.8%</span>
+            <span style="color: var(--muted);">~3.4%</span>
+          </div>
+          <div class="proxy-row">
+            <span style="color: var(--text);">Lighter-skinned females</span>
+            <span style="color: var(--accent3);">~1.7%</span>
+            <span style="color: var(--muted);">~7.1%</span>
+          </div>
+          <div class="proxy-row">
+            <span style="color: var(--text);">Darker-skinned males</span>
+            <span style="color: var(--accent2);">~10.8%</span>
+            <span style="color: var(--accent2);">~16.0%</span>
+          </div>
+          <div class="proxy-row">
+            <span style="color: var(--white); font-weight: 500;">Darker-skinned females</span>
+            <span style="color: var(--accent2); font-weight: 500;">~20.8%</span>
+            <span style="color: var(--accent2); font-weight: 500;">~34.7%</span>
+          </div>
+        </div>
+        <div class="explainer-callout" style="margin-top: 16px;">A 34-percentage-point gap — from the same model, on the same task, because of who was and wasn't in the training data.</div>
+      </div>
+
+      <div class="explainer-proof">
+        <div class="explainer-block-label" style="margin-bottom: 16px;">Simulating Sampling Bias</div>
+        <p class="explainer-block-text" style="margin-bottom: 20px;">Train on an unbalanced sample, test on a balanced one. Group B is 10× undersampled despite having nearly identical underlying skill scores. The bias is entirely a function of who was in the training data.</p>
+        <div class="proof-steps">
+          <div class="proof-step">
+            <div class="proof-step-num">STEP 01</div>
+            <div class="proof-step-label">Biased training — Group B undersampled 9:1</div>
+            <div class="terminals-grid" style="margin-top: 12px;">
+              <div class="terminal">
+                <div class="terminal-bar">
+                  <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                  <span class="terminal-label">simulate_bias.py — biased sample</span>
+                </div>
+                <div class="terminal-body">
+                  <div class="t-head"># Training data composition</div>
+                  <div class="t-normal">Group A samples: 900 (90%)</div>
+                  <div class="t-bad">Group B samples: 100 (10%) ← undersampled</div>
+                  <div class="t-head" style="margin-top: 8px;"># Test set (balanced real-world)</div>
+                  <div class="t-normal">Group A: 500 · Group B: 500</div>
+                </div>
+              </div>
+              <div class="terminal">
+                <div class="terminal-bar">
+                  <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                  <span class="terminal-label">results.py — BIASED TRAINING OUTPUT</span>
+                </div>
+                <div class="terminal-body">
+                  <div class="t-head">--- BIASED TRAINING SAMPLE RESULTS ---</div>
+                  <div class="t-good">Group A accuracy: 0.9420</div>
+                  <div class="t-bad">Group B accuracy: 0.8860 ← underperforms</div>
+                  <div class="t-bad">Accuracy gap: 0.0560</div>
+                  <div class="t-bad">Positive rate gap: 0.0740</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="proof-step" style="margin-top: 24px;">
+            <div class="proof-step-num">STEP 02</div>
+            <div class="proof-step-label">Fix — oversample the underrepresented group</div>
+            <div class="terminals-grid" style="margin-top: 12px;">
+              <div class="terminal" style="border-color: color-mix(in srgb, var(--accent) 30%, var(--border));">
+                <div class="terminal-bar">
+                  <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                  <span class="terminal-label">fix.py — Group B oversampled to match A</span>
+                </div>
+                <div class="terminal-body">
+                  <div class="t-good">Group A accuracy: 0.9380</div>
+                  <div class="t-good">Group B accuracy: 0.9310</div>
+                  <div class="t-accent">Accuracy gap: 0.0070 — 87% reduction</div>
+                </div>
+              </div>
+              <div class="terminal">
+                <div class="terminal-bar">
+                  <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                  <span class="terminal-label">audit_representation.py</span>
+                </div>
+                <div class="terminal-body">
+                  <div class="t-head"># representation ratio check</div>
+                  <div class="t-normal">Group A: dataset 0.90 / expected 0.50</div>
+                  <div class="t-bad">→ OVERREPRESENTED (ratio: 1.80)</div>
+                  <div class="t-normal">Group B: dataset 0.10 / expected 0.50</div>
+                  <div class="t-bad">→ UNDERREPRESENTED (ratio: 0.20)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="explainer-detection">
+        <div class="explainer-block-label">How to Detect Sampling Bias</div>
+        <div class="code-block" style="margin-top: 16px;">
+          <div class="code-block-header">
+            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+            audit_representation.py
+          </div>
+          <div class="code-block-body" style="font-size: 11px;">
+            <span class="k">def</span> <span class="v">audit_representation</span>(df, group_col, expected_proportions):<br>
+            &nbsp;&nbsp;<span class="c">"""Flag groups as OVER/UNDERREPRESENTED vs real-world."""</span><br>
+            &nbsp;&nbsp;proportions = df[group_col].value_counts(normalize=<span class="v">True</span>)<br>
+            &nbsp;&nbsp;audit = pd.DataFrame({<span class="v">'dataset_proportion'</span>: proportions})<br>
+            &nbsp;&nbsp;audit[<span class="v">'expected'</span>] = pd.Series(expected_proportions)<br>
+            &nbsp;&nbsp;audit[<span class="v">'ratio'</span>] = (audit[<span class="v">'dataset_proportion'</span>] / audit[<span class="v">'expected'</span>]).round(4)<br>
+            &nbsp;&nbsp;audit[<span class="v">'flag'</span>] = audit[<span class="v">'ratio'</span>].apply(<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="k">lambda</span> r: <span class="v">'OVERREPRESENTED'</span> <span class="k">if</span> r &gt; 1.5<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">else</span> <span class="v">'UNDERREPRESENTED'</span> <span class="k">if</span> r &lt; 0.67<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">else</span> <span class="v">'OK'</span><br>
+            &nbsp;&nbsp;)<br>
+            &nbsp;&nbsp;<span class="k">return</span> audit<br><br>
+            <span class="c"># Run before every training job</span><br>
+            real_world = {<span class="v">'men'</span>: 0.51, <span class="v">'women'</span>: 0.49}<br>
+            result = audit_representation(df, <span class="v">'gender'</span>, real_world)<br>
+            <span class="c"># UNDERREPRESENTED → oversample, reweight, or restrict deployment</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="explainer-takeaway">
+        <div class="explainer-block-label">The Bigger Picture</div>
+        <p class="explainer-block-text">Sampling bias is not a technical accident. It reflects who had access to the systems that generated the data in the first place. Facial recognition datasets skew lighter-skinned because the researchers who built them moved in predominantly lighter-skinned professional environments. Clinical AI skews wealthy because hospitals in affluent ZIP codes have better electronic health record infrastructure. NLP models skew toward Standard American English because that's what most of the training corpus is written in. The data you have is a record of the world as it was — including which people were visible, documented, and deemed worth measuring. A model trained on that data will reproduce those decisions at scale.</p>
+        <div class="explainer-callout">You cannot fix a representativeness problem with a better algorithm. You fix it with better data — or you disclose the limitation and restrict deployment accordingly.</div>
+      </div>
+
+      <div class="explainer-reading">
+        <div class="explainer-block-label" style="margin-bottom: 16px;">Further Reading</div>
+        <div class="reading-links">
+          <a href="http://proceedings.mlr.press/v81/buolamwini18a.html" target="_blank" class="reading-link">↗ Buolamwini &amp; Gebru: Gender Shades (2018)</a>
+          <a href="https://science.sciencemag.org/content/366/6464/447" target="_blank" class="reading-link">↗ Obermeyer et al.: Dissecting racial bias in a health algorithm (Science, 2019)</a>
+          <a href="https://dl.acm.org/doi/10.1145/3442188.3445922" target="_blank" class="reading-link">↗ Bender et al.: On the Dangers of Stochastic Parrots (2021)</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="explainer-footer">
+      <div class="explainer-footer-label">Coming Soon</div>
+      <div class="coming-soon-pills">
+        <span class="coming-pill">What is Demographic Parity?</span>
+        <span class="coming-pill">Why Fairness Metrics Conflict</span>
+        <span class="coming-pill">Equalized Odds vs Predictive Parity</span>
+      </div>
+    </div>
+  </div>
+
+</div>
 </section>
 <section id="impact" style="background: var(--surface);">
   <div class="section-eyebrow"><span class="num">05</span>Why This Matters</div>
@@ -1998,6 +2214,13 @@
       <div>
         <div class="roadmap-name">Explainer: Proxy Variables</div>
         <div class="roadmap-meta">Concept deep-dive · detection code · real-world proof</div>
+      </div>
+    </div>
+    <div class="roadmap-item">
+      <div class="roadmap-status done"></div>
+      <div>
+        <div class="roadmap-name">Explainer: Sampling Bias</div>
+        <div class="roadmap-meta">Gender Shades study · audit code · mitigation strategies</div>
       </div>
     </div>
     <div class="roadmap-item">
