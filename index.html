@@ -789,32 +789,6 @@
     font-weight: 400;
   }
 
-  /* Dark mode: boost all muted body text weight for legibility */
-  html:not([data-theme="light"]) .about-body,
-  html:not([data-theme="light"]) .project-desc,
-  html:not([data-theme="light"]) .key-insight p,
-  html:not([data-theme="light"]) .explainer-block-text,
-  html:not([data-theme="light"]) .explainer-def-text,
-  html:not([data-theme="light"]) .explainer-tagline,
-  html:not([data-theme="light"]) .proxy-row > span,
-  html:not([data-theme="light"]) .reading-link,
-  html:not([data-theme="light"]) .impact-desc,
-  html:not([data-theme="light"]) .impact-footnote,
-  html:not([data-theme="light"]) .roadmap-meta,
-  html:not([data-theme="light"]) .method-desc,
-  html:not([data-theme="light"]) .roadmap-sub {
-    font-weight: 500;
-  }
-
-
-  html:not([data-theme="light"]) .terminal-body,
-  html:not([data-theme="light"]) .terminal-body .t-head,
-  html:not([data-theme="light"]) .terminal-body .t-bad,
-  html:not([data-theme="light"]) .terminal-body .t-good,
-  html:not([data-theme="light"]) .terminal-body .t-accent,
-  html:not([data-theme="light"]) .terminal-body .t-normal {
-    font-weight: 500;
-  }
 
   .t-head { color: var(--t-head-color); }
   .t-bad { color: var(--accent2); }
@@ -1364,10 +1338,97 @@
 
   /* RESPONSIVE */
   @media (max-width: 900px) {
-    nav { padding: 0 16px; }
+    nav { padding: 0 16px; height: 52px; }
     nav .nav-links { display: none; }
-    .nav-github { font-size: 9px; padding: 7px 12px; }
-    .theme-toggle { width: 30px; height: 30px; font-size: 12px; margin-left: 6px; }
+    .nav-social { display: none; }
+    .nav-github { display: none; }
+    .theme-toggle { width: 30px; height: 30px; font-size: 12px; margin-left: 0; }
+
+    /* Hamburger button */
+    .nav-hamburger {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px; height: 36px;
+      border: 1px solid var(--border2);
+      background: transparent;
+      cursor: crosshair;
+      padding: 8px;
+      flex-shrink: 0;
+      margin-left: 8px;
+    }
+    .nav-hamburger span {
+      display: block;
+      height: 1px;
+      background: var(--muted);
+      transition: all 0.25s;
+      transform-origin: center;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    /* Mobile drawer */
+    .mobile-nav {
+      position: fixed;
+      top: 52px; left: 0; right: 0;
+      background: var(--nav-bg);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border2);
+      z-index: 99;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .mobile-nav.open { max-height: 600px; }
+    .mobile-nav-inner {
+      padding: 8px 0 16px;
+    }
+    .mobile-nav a {
+      display: block;
+      padding: 13px 24px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.15s, background 0.15s;
+    }
+    .mobile-nav a:hover { color: var(--accent); background: color-mix(in srgb, var(--accent) 4%, transparent); }
+    .mobile-nav a:last-child { border-bottom: none; }
+    .mobile-nav .mobile-section-label {
+      display: block;
+      padding: 10px 24px 4px;
+      font-size: 8px;
+      color: var(--accent);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      border-bottom: none;
+      pointer-events: none;
+      background: none;
+    }
+    .mobile-nav .mobile-sub {
+      padding-left: 36px;
+      font-size: 10px;
+    }
+    .mobile-nav .mobile-social-row {
+      display: flex;
+      gap: 1px;
+      padding: 16px 24px 0;
+      border-top: 1px solid var(--border);
+      margin-top: 8px;
+    }
+    .mobile-nav .mobile-social-row a {
+      flex: 1;
+      text-align: center;
+      border: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 6px;
+      font-size: 9px;
+    }
 
     .hero-inner { padding: 0 20px 52px; }
     .hero-title { font-size: clamp(44px, 12vw, 80px); }
@@ -1381,13 +1442,8 @@
     .about-grid { grid-template-columns: 1fr; gap: 32px; }
     .method-grid { grid-template-columns: 1fr; gap: 36px; }
 
-    /* Project cards mobile */
     .project-card { padding: 24px 20px; }
-    .project-top {
-      flex-direction: column;
-      gap: 20px;
-      margin-bottom: 28px;
-    }
+    .project-top { flex-direction: column; gap: 20px; margin-bottom: 28px; }
     .project-stats { text-align: left; }
     .project-stats .stat-big { font-size: 52px; }
     .project-stats .stat-big.good { font-size: 36px; }
@@ -1411,6 +1467,11 @@
 
     .section-eyebrow { margin-bottom: 36px; }
     .hero-watermark span { font-size: clamp(100px, 30vw, 200px); }
+  }
+
+  @media (min-width: 901px) {
+    .nav-hamburger { display: none; }
+    .mobile-nav { display: none; }
   }
 
   @media (max-width: 480px) {
@@ -1538,7 +1599,32 @@
     <a href="https://www.linkedin.com/in/yash-kewlani-7ab090357" target="_blank" class="nav-social-link">↗ LinkedIn</a>
   </div>
   <button class="theme-toggle" id="themeToggle" title="Toggle light/dark mode">☀</button>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE NAV DRAWER -->
+<div class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-inner">
+    <a href="#about" class="mobile-link">About</a>
+    <span class="mobile-section-label">Experiments</span>
+    <a href="#project-compas" class="mobile-link mobile-sub">01 — COMPAS</a>
+    <a href="#project-hiring" class="mobile-link mobile-sub">02 — AI Hiring</a>
+    <a href="#project-credit" class="mobile-link mobile-sub">03 — German Credit</a>
+    <span class="mobile-section-label">Explainers</span>
+    <a href="#explainer-proxy" class="mobile-link mobile-sub">01 — Proxy Variables</a>
+    <a href="#explainer-sampling" class="mobile-link mobile-sub">02 — Sampling Bias</a>
+    <a href="#methodology" class="mobile-link">Method</a>
+    <a href="#impact" class="mobile-link">Impact</a>
+    <a href="#roadmap" class="mobile-link">Roadmap</a>
+    <div class="mobile-social-row">
+      <a href="https://github.com/yakew7/Fair-Code" target="_blank">↗ GitHub</a>
+      <a href="https://instagram.com/thefaircodeproject" target="_blank">↗ Insta</a>
+      <a href="https://www.linkedin.com/in/yash-kewlani-7ab090357" target="_blank">↗ LinkedIn</a>
+    </div>
+  </div>
+</div>
 
 <!-- HERO -->
 <section class="hero" id="home">
@@ -2427,6 +2513,21 @@
 </footer>
 
 <script>
+  // Hamburger menu
+  const hamburger = document.getElementById('navHamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileNav.classList.toggle('open');
+  });
+  // Close drawer when a link is tapped
+  mobileNav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileNav.classList.remove('open');
+    });
+  });
+
   // Theme toggle
   const toggle = document.getElementById('themeToggle');
   const html = document.documentElement;
