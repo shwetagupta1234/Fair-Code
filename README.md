@@ -224,7 +224,8 @@ Fair-Code/
 │   └── fair.png                   # Terminal output — mitigated results
 │
 ├── explainers/
-│   └── proxy-variables.md         # What is a proxy variable? (concept + detection code)
+│   ├── proxy-variables.md         # What is a proxy variable? (concept + detection code)
+│   └── sampling-bias.md           # What is sampling bias? (concept + simulation + mitigation)
 │
 ├── CONTRIBUTING.md
 └── README.md
@@ -237,6 +238,7 @@ Fair-Code/
 | Explainer | Concept |
 |---|---|
 | [What is a Proxy Variable?](explainers/proxy-variables.md) | Why AI stays biased even after you remove race from the data |
+| [What is Sampling Bias?](explainers/sampling-bias.md) | Why your AI works great in the lab and fails on the people who need it most |
 | Coming soon | What is demographic parity? |
 | Coming soon | Why fairness metrics conflict with each other |
 
