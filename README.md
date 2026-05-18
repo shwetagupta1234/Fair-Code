@@ -4,6 +4,11 @@
 
 **by Yash Kewlani · [@thefaircodeproject](https://instagram.com/thefaircodeproject)**
 
+![Python](https://img.shields.io/badge/Python-3.x-blue?style=flat-square&logo=python)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-ML-orange?style=flat-square&logo=scikit-learn)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
+![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=flat-square)
+
 ---
 
 ## What This Is
