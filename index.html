@@ -161,6 +161,32 @@
 
   .nav-github:hover { opacity: 0.85; }
 
+  .nav-social {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-left: 10px;
+  }
+
+  .nav-social-link {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    padding: 8px 14px;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    margin-left: -1px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+    cursor: crosshair;
+  }
+
+  .nav-social-link:hover { color: var(--accent); border-color: var(--border2); background: color-mix(in srgb, var(--accent) 5%, transparent); }
+
   /* THEME TOGGLE */
   .theme-toggle {
     width: 36px; height: 36px;
@@ -174,7 +200,7 @@
     font-size: 14px;
     transition: all 0.2s;
     flex-shrink: 0;
-    margin-left: 10px;
+    margin-left: 6px;
   }
 
   .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
@@ -1474,7 +1500,11 @@
     <li><a href="#impact">Impact</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
   </ul>
-  <a href="https://github.com/yakew7/Fair-Code" target="_blank" class="nav-github">↗ GitHub</a>
+  <div class="nav-social">
+    <a href="https://github.com/yakew7/Fair-Code" target="_blank" class="nav-github">↗ GitHub</a>
+    <a href="https://instagram.com/thefaircodeproject" target="_blank" class="nav-social-link">↗ Insta</a>
+    <a href="https://www.linkedin.com/in/yash-kewlani-7ab090357" target="_blank" class="nav-social-link">↗ LinkedIn</a>
+  </div>
   <button class="theme-toggle" id="themeToggle" title="Toggle light/dark mode">☀</button>
 </nav>
 
